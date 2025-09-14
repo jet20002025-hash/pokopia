@@ -29,7 +29,11 @@
     
     <!-- Security and Safety Meta Tags -->
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:;">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7208260866318884"
+            crossorigin="anonymous"></script>
     
     <!-- Google Search Console Verification -->
     <!-- Add your verification code here when you get it from Google Search Console -->
@@ -745,6 +749,58 @@
             background: #764ba2;
             transform: translateY(-2px);
         }
+        
+        /* Ad Container Styles */
+        .ad-container {
+            margin: 20px 0;
+            text-align: center;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 10px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .ad-container.hero-ad {
+            margin: 30px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+        }
+        
+        .ad-container.content-ad {
+            margin: 40px 0;
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .ad-container.sidebar-ad {
+            margin: 30px 0;
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+        }
+        
+        .ad-container.footer-ad {
+            margin: 20px 0;
+            background: #343a40;
+            color: white;
+            border: none;
+        }
+        
+        /* Responsive Ad Styles */
+        @media (max-width: 768px) {
+            .ad-container {
+                margin: 15px 0;
+                padding: 8px;
+            }
+            
+            .ad-container.hero-ad {
+                margin: 20px 0;
+            }
+            
+            .ad-container.content-ad {
+                margin: 25px 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -813,7 +869,17 @@
                         </div>
                     </div>
                 </section>
-
+                
+                <!-- Ad Unit 1: Content Banner -->
+                <div class="ad-container content-ad">
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-7208260866318884"
+                         data-ad-slot="XXXXXXXXXX"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                </div>
+                
                 <!-- Pokédex Section -->
                 <section id="pokemon-database" class="section">
                     <h2 data-en="Pokédex" data-zh="宝可梦图鉴" data-ja="ポケモン図鑑">Pokédex</h2>
@@ -893,7 +959,17 @@
                         </div>
                     </div>
                 </section>
-
+                
+                <!-- Ad Unit 2: Sidebar Ad -->
+                <div class="ad-container sidebar-ad">
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-7208260866318884"
+                         data-ad-slot="XXXXXXXXXX"
+                         data-ad-format="rectangle"
+                         data-ad-layout="in-article"></ins>
+                </div>
+                
                 <!-- Wiki Section -->
                 <section id="wiki" class="section">
                     <h2 data-en="Pokopia Wiki" data-zh="Pokopia游戏百科" data-ja="Pokopiaゲーム百科">Pokopia Wiki</h2>
@@ -1128,7 +1204,17 @@
             </div>
         </div>
     </main>
-
+    
+    <!-- Ad Unit 3: Footer Banner -->
+    <div class="ad-container footer-ad">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-7208260866318884"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </div>
+    
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -1366,6 +1452,10 @@
             }
         `;
         document.head.appendChild(style);
+        // Initialize AdSense
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </body>
 </html>
