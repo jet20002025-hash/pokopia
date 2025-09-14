@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokopia - Pokémon Life Simulation Game Information Hub</title>
+    <title data-en="Pokopia - Pokémon Life Simulation Game Information Hub" data-zh="Pokopia - 宝可梦生活模拟游戏资讯站" data-ja="Pokopia - ポケモンライフシミュレーションゲーム情報ハブ">Pokopia - Pokémon Life Simulation Game Information Hub</title>
     <meta name="description" content="Official Pokopia information hub, providing latest game news, guides, community discussions and more">
     <meta name="keywords" content="Pokopia,Pokémon,Pokemon,life simulation,building game,Nintendo Switch,Nintendo Switch 2,Ditto,Game Freak,The Pokémon Company">
     
@@ -160,6 +160,33 @@
         nav a:hover {
             background: #667eea;
             color: white;
+        }
+
+        /* Language Selector */
+        .language-selector {
+            margin-left: 2rem;
+        }
+
+        .language-selector select {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .language-selector select:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+        }
+
+        .language-selector select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         /* Hero Section */
@@ -376,6 +403,232 @@
             opacity: 0.9;
         }
 
+        /* Community Features */
+        .community-features {
+            margin-top: 3rem;
+        }
+
+        .community-features h3 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #4a5568;
+            font-size: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-card .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h4 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            color: #718096;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .community-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .community-btn:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Pokédex Styles */
+        .pokemon-search {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+            gap: 1rem;
+        }
+
+        .pokemon-search input {
+            padding: 1rem 1.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            font-size: 1rem;
+            width: 300px;
+            transition: border-color 0.3s ease;
+        }
+
+        .pokemon-search input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .pokemon-search button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pokemon-search button:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transform: translateY(-2px);
+        }
+
+        .pokemon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .pokemon-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .pokemon-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .pokemon-image {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .pokemon-card h3 {
+            text-align: center;
+            color: #4a5568;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .pokemon-type {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .pokemon-type span {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .type-normal { background: #a8a878; }
+        .type-grass { background: #78c850; }
+        .type-poison { background: #a040a0; }
+        .type-water { background: #6890f0; }
+        .type-electric { background: #f8d030; }
+
+        .pokemon-abilities {
+            margin-top: 1.5rem;
+        }
+
+        .pokemon-abilities h4 {
+            color: #667eea;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .pokemon-abilities ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pokemon-abilities li {
+            background: #f7fafc;
+            padding: 0.5rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+        }
+
+        /* Wiki Styles */
+        .wiki-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .wiki-category {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .wiki-category h3 {
+            color: #4a5568;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+
+        .wiki-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .wiki-item {
+            padding: 1rem;
+            background: #f7fafc;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .wiki-item h4 {
+            color: #667eea;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .wiki-item p {
+            color: #718096;
+            line-height: 1.6;
+            margin: 0;
+        }
+
         /* Footer */
         footer {
             background: #2d3748;
@@ -501,16 +754,27 @@
                 <a href="#home" class="logo">Pokopia</a>
                 <nav>
                     <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#news">News</a></li>
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="#community">Community</a></li>
-                        <li><a href="#guides">Guides</a></li>
-                        <li><a href="#media">Media</a></li>
-                        <li><a href="#purchase">Pre-order</a></li>
+                        <li><a href="#home" data-en="Home" data-zh="首页" data-ja="ホーム">Home</a></li>
+                        <li><a href="#about" data-en="About" data-zh="游戏介绍" data-ja="ゲーム紹介">About</a></li>
+                        <li><a href="#pokemon-database" data-en="Pokédex" data-zh="宝可梦图鉴" data-ja="ポケモン図鑑">Pokédex</a></li>
+                        <li><a href="#wiki" data-en="Wiki" data-zh="游戏百科" data-ja="ゲーム百科">Wiki</a></li>
+                        <li><a href="#news" data-en="News" data-zh="最新资讯" data-ja="最新ニュース">News</a></li>
+                        <li><a href="#features" data-en="Features" data-zh="游戏特色" data-ja="ゲーム特徴">Features</a></li>
+                        <li><a href="#community" data-en="Community" data-zh="社区" data-ja="コミュニティ">Community</a></li>
+                        <li><a href="#guides" data-en="Guides" data-zh="攻略指南" data-ja="攻略ガイド">Guides</a></li>
+                        <li><a href="#media" data-en="Media" data-zh="多媒体" data-ja="メディア">Media</a></li>
+                        <li><a href="#purchase" data-en="Pre-order" data-zh="预购" data-ja="予約">Pre-order</a></li>
                     </ul>
                 </nav>
+                
+                <!-- Language Selector -->
+                <div class="language-selector">
+                    <select id="languageSelect" onchange="changeLanguage(this.value)">
+                        <option value="en">🇺🇸 English</option>
+                        <option value="zh">🇨🇳 中文</option>
+                        <option value="ja">🇯🇵 日本語</option>
+                    </select>
+                </div>
             </div>
         </div>
     </header>
@@ -518,8 +782,8 @@
     <section id="home" class="hero">
         <div class="container">
             <h1>Pokopia</h1>
-            <p>Build your dream Pokémon utopia! Play as a Ditto transformed into a human and experience an unprecedented Pokémon life simulation adventure</p>
-            <a href="#purchase" class="cta-button">Learn More</a>
+            <p data-en="Build your dream Pokémon utopia! Play as a Ditto transformed into a human and experience an unprecedented Pokémon life simulation adventure" data-zh="建造你梦想中的宝可梦乌托邦！扮演变身成人类的百变怪，体验前所未有的宝可梦生活模拟冒险" data-ja="あなたの夢のポケモンユートピアを築きましょう！人間に変身したメタモンとしてプレイし、前例のないポケモンライフシミュレーションアドベンチャーを体験">Build your dream Pokémon utopia! Play as a Ditto transformed into a human and experience an unprecedented Pokémon life simulation adventure</p>
+            <a href="#purchase" class="cta-button" data-en="Learn More" data-zh="了解更多" data-ja="詳細を見る">Learn More</a>
         </div>
     </section>
 
@@ -546,6 +810,147 @@
                         <div class="info-card">
                             <h3>🌟 Core Gameplay</h3>
                             <p>Experience slow-paced building life! Use Bulbasaur's Leafage to add greenery to the landscape, learn Squirtle's Water Gun to hydrate plants. Build furniture, grow vegetables, create homes for Pokémon, and attract more Pokémon visitors by creating a lush, welcoming environment.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Pokédex Section -->
+                <section id="pokemon-database" class="section">
+                    <h2 data-en="Pokédex" data-zh="宝可梦图鉴" data-ja="ポケモン図鑑">Pokédex</h2>
+                    <div class="pokemon-search">
+                        <input type="text" id="pokemonSearch" placeholder="Search Pokémon..." data-en-placeholder="Search Pokémon..." data-zh-placeholder="搜索宝可梦..." data-ja-placeholder="ポケモンを検索...">
+                        <button onclick="searchPokemon()" data-en="Search" data-zh="搜索" data-ja="検索">Search</button>
+                    </div>
+                    
+                    <div class="pokemon-grid">
+                        <div class="pokemon-card" data-pokemon="ditto">
+                            <div class="pokemon-image">🔄</div>
+                            <h3>Ditto</h3>
+                            <div class="pokemon-type">
+                                <span class="type-normal">Normal</span>
+                            </div>
+                            <p data-en="The main protagonist of Pokopia. Can transform into human form and learn moves from other Pokémon." data-zh="Pokopia的主角。可以变身成人类形态，并学习其他宝可梦的技能。" data-ja="Pokopiaの主人公。人間の姿に変身でき、他のポケモンから技を学ぶことができる。">The main protagonist of Pokopia. Can transform into human form and learn moves from other Pokémon.</p>
+                            <div class="pokemon-abilities">
+                                <h4 data-en="Special Abilities" data-zh="特殊能力" data-ja="特殊能力">Special Abilities</h4>
+                                <ul>
+                                    <li data-en="Transform into Human" data-zh="变身成人类" data-ja="人間に変身">Transform into Human</li>
+                                    <li data-en="Learn Other Pokémon Moves" data-zh="学习其他宝可梦技能" data-ja="他のポケモンの技を学習">Learn Other Pokémon Moves</li>
+                                    <li data-en="Building & Crafting" data-zh="建造和制作" data-ja="建築とクラフト">Building & Crafting</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="pokemon-card" data-pokemon="bulbasaur">
+                            <div class="pokemon-image">🌱</div>
+                            <h3>Bulbasaur</h3>
+                            <div class="pokemon-type">
+                                <span class="type-grass">Grass</span>
+                                <span class="type-poison">Poison</span>
+                            </div>
+                            <p data-en="A Grass-type Pokémon that can help with gardening and plant growth using Leafage." data-zh="草属性宝可梦，可以使用飞叶快刀帮助园艺和植物生长。" data-ja="草タイプのポケモンで、はっぱカッターを使ってガーデニングや植物の成長を助けることができる。">A Grass-type Pokémon that can help with gardening and plant growth using Leafage.</p>
+                            <div class="pokemon-abilities">
+                                <h4 data-en="Special Abilities" data-zh="特殊能力" data-ja="特殊能力">Special Abilities</h4>
+                                <ul>
+                                    <li data-en="Leafage - Grow Greenery" data-zh="飞叶快刀 - 生长绿色植物" data-ja="はっぱカッター - 緑を育てる">Leafage - Grow Greenery</li>
+                                    <li data-en="Plant Care" data-zh="植物护理" data-ja="植物の世話">Plant Care</li>
+                                    <li data-en="Garden Design" data-zh="花园设计" data-ja="庭園デザイン">Garden Design</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="pokemon-card" data-pokemon="squirtle">
+                            <div class="pokemon-image">🐢</div>
+                            <h3>Squirtle</h3>
+                            <div class="pokemon-type">
+                                <span class="type-water">Water</span>
+                            </div>
+                            <p data-en="A Water-type Pokémon that can hydrate plants and create water features using Water Gun." data-zh="水属性宝可梦，可以使用水枪为植物浇水和创造水景。" data-ja="水タイプのポケモンで、みずでっぽうを使って植物に水をやったり、水の景観を作ることができる。">A Water-type Pokémon that can hydrate plants and create water features using Water Gun.</p>
+                            <div class="pokemon-abilities">
+                                <h4 data-en="Special Abilities" data-zh="特殊能力" data-ja="特殊能力">Special Abilities</h4>
+                                <ul>
+                                    <li data-en="Water Gun - Hydrate Plants" data-zh="水枪 - 为植物浇水" data-ja="みずでっぽう - 植物に水やり">Water Gun - Hydrate Plants</li>
+                                    <li data-en="Water Features" data-zh="水景设计" data-ja="水の景観">Water Features</li>
+                                    <li data-en="Irrigation System" data-zh="灌溉系统" data-ja="灌漑システム">Irrigation System</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="pokemon-card" data-pokemon="pikachu">
+                            <div class="pokemon-image">⚡</div>
+                            <h3>Pikachu</h3>
+                            <div class="pokemon-type">
+                                <span class="type-electric">Electric</span>
+                            </div>
+                            <p data-en="An Electric-type Pokémon that can power electrical devices and lighting in your utopia." data-zh="电属性宝可梦，可以为你的乌托邦中的电子设备和照明供电。" data-ja="電気タイプのポケモンで、ユートピアの電子機器や照明に電力を供給することができる。">An Electric-type Pokémon that can power electrical devices and lighting in your utopia.</p>
+                            <div class="pokemon-abilities">
+                                <h4 data-en="Special Abilities" data-zh="特殊能力" data-ja="特殊能力">Special Abilities</h4>
+                                <ul>
+                                    <li data-en="Thunderbolt - Power Devices" data-zh="十万伏特 - 为设备供电" data-ja="10まんボルト - デバイスに電力供給">Thunderbolt - Power Devices</li>
+                                    <li data-en="Lighting System" data-zh="照明系统" data-ja="照明システム">Lighting System</li>
+                                    <li data-en="Energy Management" data-zh="能源管理" data-ja="エネルギー管理">Energy Management</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Wiki Section -->
+                <section id="wiki" class="section">
+                    <h2 data-en="Pokopia Wiki" data-zh="Pokopia游戏百科" data-ja="Pokopiaゲーム百科">Pokopia Wiki</h2>
+                    
+                    <div class="wiki-categories">
+                        <div class="wiki-category">
+                            <h3 data-en="🎮 Game Mechanics" data-zh="🎮 游戏机制" data-ja="🎮 ゲームメカニクス">🎮 Game Mechanics</h3>
+                            <div class="wiki-content">
+                                <div class="wiki-item">
+                                    <h4 data-en="Building System" data-zh="建造系统" data-ja="建築システム">Building System</h4>
+                                    <p data-en="Collect wood, rocks, and other materials to build furniture, homes, and structures for Pokémon." data-zh="收集木材、石头和其他材料来为宝可梦建造家具、房屋和建筑。" data-ja="木材、石、その他の材料を集めて、ポケモンのための家具、家、建物を建築する。">Collect wood, rocks, and other materials to build furniture, homes, and structures for Pokémon.</p>
+                                </div>
+                                <div class="wiki-item">
+                                    <h4 data-en="Crafting Materials" data-zh="制作材料" data-ja="クラフト材料">Crafting Materials</h4>
+                                    <p data-en="Gather resources from the environment to create tools, decorations, and functional items." data-zh="从环境中收集资源来制作工具、装饰品和功能性物品。" data-ja="環境から資源を集めて、道具、装飾品、機能的なアイテムを作成する。">Gather resources from the environment to create tools, decorations, and functional items.</p>
+                                </div>
+                                <div class="wiki-item">
+                                    <h4 data-en="Pokémon Interactions" data-zh="宝可梦互动" data-ja="ポケモンとの交流">Pokémon Interactions</h4>
+                                    <p data-en="Befriend Pokémon and learn their moves to enhance your building and crafting capabilities." data-zh="与宝可梦交朋友，学习它们的技能来增强你的建造和制作能力。" data-ja="ポケモンと友達になり、彼らの技を学んで建築とクラフト能力を向上させる。">Befriend Pokémon and learn their moves to enhance your building and crafting capabilities.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="wiki-category">
+                            <h3 data-en="🌍 World Features" data-zh="🌍 世界特色" data-ja="🌍 ワールド機能">🌍 World Features</h3>
+                            <div class="wiki-content">
+                                <div class="wiki-item">
+                                    <h4 data-en="Day-Night Cycle" data-zh="昼夜循环" data-ja="昼夜サイクル">Day-Night Cycle</h4>
+                                    <p data-en="Experience natural time progression with realistic day and night changes affecting gameplay." data-zh="体验自然的时间进程，真实的昼夜变化影响游戏玩法。" data-ja="リアルな昼と夜の変化がゲームプレイに影響する自然な時間の進行を体験する。">Experience natural time progression with realistic day and night changes affecting gameplay.</p>
+                                </div>
+                                <div class="wiki-item">
+                                    <h4 data-en="Weather System" data-zh="天气系统" data-ja="天気システム">Weather System</h4>
+                                    <p data-en="Dynamic weather affects your utopia's environment and Pokémon behavior." data-zh="动态天气影响你的乌托邦环境和宝可梦行为。" data-ja="動的な天気がユートピアの環境とポケモンの行動に影響する。">Dynamic weather affects your utopia's environment and Pokémon behavior.</p>
+                                </div>
+                                <div class="wiki-item">
+                                    <h4 data-en="Island Design" data-zh="岛屿设计" data-ja="島のデザイン">Island Design</h4>
+                                    <p data-en="Create and customize your own island paradise with unique landscapes and layouts." data-zh="创造和定制你自己的岛屿天堂，拥有独特的景观和布局。" data-ja="ユニークな景観とレイアウトで、あなた自身の島の楽園を作成し、カスタマイズする。">Create and customize your own island paradise with unique landscapes and layouts.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="wiki-category">
+                            <h3 data-en="🏠 Living Features" data-zh="🏠 生活功能" data-ja="🏠 生活機能">🏠 Living Features</h3>
+                            <div class="wiki-content">
+                                <div class="wiki-item">
+                                    <h4 data-en="Farming & Gardening" data-zh="农业与园艺" data-ja="農業とガーデニング">Farming & Gardening</h4>
+                                    <p data-en="Grow vegetables, fruits, and flowers to create a sustainable ecosystem." data-zh="种植蔬菜、水果和花卉来创造可持续的生态系统。" data-ja="野菜、果物、花を育てて持続可能な生態系を作る。">Grow vegetables, fruits, and flowers to create a sustainable ecosystem.</p>
+                                </div>
+                                <div class="wiki-item">
+                                    <h4 data-en="Slow Life Experience" data-zh="慢生活体验" data-ja="スローライフ体験">Slow Life Experience</h4>
+                                    <p data-en="Enjoy peaceful, relaxing gameplay focused on building relationships and creating beauty." data-zh="享受平静、放松的游戏体验，专注于建立关系和创造美丽。" data-ja="関係を築き、美しさを創造することに焦点を当てた平和でリラックスしたゲームプレイを楽しむ。">Enjoy peaceful, relaxing gameplay focused on building relationships and creating beauty.</p>
+                                </div>
+                                <div class="wiki-item">
+                                    <h4 data-en="Community Building" data-zh="社区建设" data-ja="コミュニティ構築">Community Building</h4>
+                                    <p data-en="Invite other players and Pokémon to visit and live in your utopia." data-zh="邀请其他玩家和宝可梦来访问和生活在你的乌托邦中。" data-ja="他のプレイヤーやポケモンをあなたのユートピアに訪問し、住んでもらう。">Invite other players and Pokémon to visit and live in your utopia.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -607,23 +1012,48 @@
 
                 <!-- Community Section -->
                 <section id="community" class="section">
-                    <h2>Community Stats</h2>
+                    <h2 data-en="Community Stats" data-zh="社区统计" data-ja="コミュニティ統計">Community Stats</h2>
                     <div class="community-stats">
                         <div class="stat-item">
                             <div class="stat-number">50K+</div>
-                            <div class="stat-label">Followers</div>
+                            <div class="stat-label" data-en="Followers" data-zh="关注者" data-ja="フォロワー">Followers</div>
                         </div>
                         <div class="stat-item">
                             <div class="stat-number">100+</div>
-                            <div class="stat-label">Guide Articles</div>
+                            <div class="stat-label" data-en="Guide Articles" data-zh="攻略文章" data-ja="攻略記事">Guide Articles</div>
                         </div>
                         <div class="stat-item">
                             <div class="stat-number">1K+</div>
-                            <div class="stat-label">Community Discussions</div>
+                            <div class="stat-label" data-en="Community Discussions" data-zh="社区讨论" data-ja="コミュニティ討論">Community Discussions</div>
                         </div>
                         <div class="stat-item">
                             <div class="stat-number">24/7</div>
-                            <div class="stat-label">Online Support</div>
+                            <div class="stat-label" data-en="Online Support" data-zh="在线支持" data-ja="オンラインサポート">Online Support</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Community Features -->
+                    <div class="community-features">
+                        <h3 data-en="Community Features" data-zh="社区功能" data-ja="コミュニティ機能">Community Features</h3>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">💬</div>
+                                <h4 data-en="Discussion Forum" data-zh="讨论论坛" data-ja="討論フォーラム">Discussion Forum</h4>
+                                <p data-en="Share your thoughts and strategies with other players" data-zh="与其他玩家分享你的想法和策略" data-ja="他のプレイヤーとあなたの考えや戦略を共有">Share your thoughts and strategies with other players</p>
+                                <button class="community-btn" onclick="openForum()" data-en="Join Discussion" data-zh="加入讨论" data-ja="討論に参加">Join Discussion</button>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">📸</div>
+                                <h4 data-en="Screenshot Gallery" data-zh="截图画廊" data-ja="スクリーンショットギャラリー">Screenshot Gallery</h4>
+                                <p data-en="Showcase your Pokopia creations and discoveries" data-zh="展示你的Pokopia创作和发现" data-ja="あなたのPokopia作品や発見を紹介">Showcase your Pokopia creations and discoveries</p>
+                                <button class="community-btn" onclick="openGallery()" data-en="View Gallery" data-zh="查看画廊" data-ja="ギャラリーを見る">View Gallery</button>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">🏆</div>
+                                <h4 data-en="Achievement Sharing" data-zh="成就分享" data-ja="実績共有">Achievement Sharing</h4>
+                                <p data-en="Share your in-game achievements and milestones" data-zh="分享你的游戏成就和里程碑" data-ja="ゲーム内の実績やマイルストーンを共有">Share your in-game achievements and milestones</p>
+                                <button class="community-btn" onclick="openAchievements()" data-en="Share Achievement" data-zh="分享成就" data-ja="実績を共有">Share Achievement</button>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -803,6 +1233,139 @@
             section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(section);
         });
+
+        // Language switching functionality
+        function changeLanguage(lang) {
+            // Update page title
+            const title = document.querySelector('title');
+            title.textContent = title.getAttribute(`data-${lang}`);
+            
+            // Update all elements with data attributes
+            document.querySelectorAll('[data-en]').forEach(element => {
+                if (element.getAttribute(`data-${lang}`)) {
+                    element.textContent = element.getAttribute(`data-${lang}`);
+                }
+            });
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+            
+            // Save language preference
+            localStorage.setItem('pokopia-language', lang);
+            
+            // Show success message
+            showNotification(`Language changed to ${lang === 'en' ? 'English' : lang === 'zh' ? '中文' : '日本語'}`, 'success');
+        }
+
+        // Community functions
+        function openForum() {
+            showNotification('Forum feature coming soon! Join our Discord community for now.', 'info');
+        }
+
+        function openGallery() {
+            showNotification('Screenshot gallery coming soon! Share your creations on social media.', 'info');
+        }
+
+        function openAchievements() {
+            showNotification('Achievement sharing feature coming soon! Stay tuned for updates.', 'info');
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.textContent = message;
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#48bb78' : type === 'error' ? '#f56565' : '#4299e1'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 10000;
+                font-weight: 500;
+                max-width: 300px;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Load saved language preference
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('pokopia-language') || 'en';
+            document.getElementById('languageSelect').value = savedLang;
+            changeLanguage(savedLang);
+        });
+
+        // Pokédex search functionality
+        function searchPokemon() {
+            const searchTerm = document.getElementById('pokemonSearch').value.toLowerCase();
+            const pokemonCards = document.querySelectorAll('.pokemon-card');
+            
+            pokemonCards.forEach(card => {
+                const pokemonName = card.querySelector('h3').textContent.toLowerCase();
+                const pokemonData = card.getAttribute('data-pokemon');
+                
+                if (pokemonName.includes(searchTerm) || pokemonData.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeInUp 0.5s ease';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Show search results message
+            const visibleCards = Array.from(pokemonCards).filter(card => card.style.display !== 'none');
+            if (searchTerm && visibleCards.length === 0) {
+                showNotification('No Pokémon found matching your search.', 'info');
+            } else if (searchTerm) {
+                showNotification(`Found ${visibleCards.length} Pokémon matching "${searchTerm}"`, 'success');
+            }
+        }
+
+        // Real-time search as user types
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('pokemonSearch');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    if (this.value.length > 2) {
+                        searchPokemon();
+                    } else if (this.value.length === 0) {
+                        // Show all cards when search is cleared
+                        document.querySelectorAll('.pokemon-card').forEach(card => {
+                            card.style.display = 'block';
+                        });
+                    }
+                });
+            }
+        });
+
+        // Add CSS animations for notifications
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+            @keyframes fadeInUp {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
