@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Memory - Pokopia Games</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .game-title {
+            font-size: 2.5rem;
+            color: #4a5568;
+            margin-bottom: 10px;
+        }
+
+        .game-subtitle {
+            color: #718096;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .difficulty-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .difficulty-btn {
+            padding: 12px 24px;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            background: white;
+            color: #4a5568;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .difficulty-btn:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .difficulty-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .memory-grid {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .memory-grid.easy {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .memory-grid.medium {
+            grid-template-columns: repeat(6, 1fr);
+        }
+
+        .memory-grid.hard {
+            grid-template-columns: repeat(8, 1fr);
+        }
+
+        .memory-card {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .memory-card:hover {
+            transform: scale(1.05);
+        }
+
+        .memory-card.flipped {
+            background: white;
+            border: 2px solid #e2e8f0;
+        }
+
+        .memory-card.matched {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            transform: scale(0.95);
+        }
+
+        .memory-card .card-content {
+            font-size: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .memory-card .card-back {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .memory-card.flipped .card-back {
+            display: none;
+        }
+
+        .memory-card.flipped .card-content {
+            display: block;
+        }
+
+        .memory-card:not(.flipped) .card-content {
+            display: none;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        .btn-success {
+            background: #48bb78;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #38a169;
+        }
+
+        .instructions {
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
+        }
+
+        .instructions h3 {
+            color: #4a5568;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .instructions ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+            color: #718096;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .instructions li::before {
+            content: '🎯';
+            position: absolute;
+            left: 0;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #4a5568;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        .game-over {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            z-index: 1000;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: gameOverAnimation 1s ease;
+        }
+
+        @keyframes gameOverAnimation {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        .game-over h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .game-over p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .game-over button {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 5px;
+        }
+
+        .timer {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: #4a5568;
+            font-weight: 600;
+        }
+
+        .high-scores {
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .high-scores h3 {
+            color: #4a5568;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .score-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .score-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #e2e8f0;
+        }
+
+        .score-difficulty {
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .score-time {
+            font-size: 1.1rem;
+            color: #4a5568;
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .game-title {
+                font-size: 2rem;
+            }
+
+            .game-stats {
+                gap: 15px;
+            }
+
+            .stat-item {
+                min-width: 100px;
+                padding: 12px 20px;
+            }
+
+            .memory-card {
+                width: 60px;
+                height: 60px;
+            }
+
+            .memory-card .card-content {
+                font-size: 1.5rem;
+            }
+
+            .memory-card .card-back {
+                font-size: 1.2rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="goBack()">←</button>
+    
+    <div class="game-container">
+        <div class="game-header">
+            <h1 class="game-title">🧠 Pokémon Memory</h1>
+            <p class="game-subtitle">Test your memory skills! Find matching Pokémon pairs as fast as you can!</p>
+            
+            <div class="game-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="moves">0</div>
+                    <div class="stat-label">Moves</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="matches">0</div>
+                    <div class="stat-label">Matches</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="time">00:00</div>
+                    <div class="stat-label">Time</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>How to Play:</h3>
+            <ul>
+                <li>Choose your difficulty level (Easy: 8 cards, Medium: 18 cards, Hard: 32 cards)</li>
+                <li>Click on cards to flip them and reveal Pokémon</li>
+                <li>Find matching pairs to remove them from the board</li>
+                <li>Complete the game in as few moves and as little time as possible</li>
+                <li>Try to beat your high scores!</li>
+            </ul>
+        </div>
+
+        <div class="difficulty-selector">
+            <button class="difficulty-btn active" onclick="setDifficulty('easy')">Easy (4x2)</button>
+            <button class="difficulty-btn" onclick="setDifficulty('medium')">Medium (6x3)</button>
+            <button class="difficulty-btn" onclick="setDifficulty('hard')">Hard (8x4)</button>
+        </div>
+
+        <div class="memory-grid easy" id="memoryGrid">
+            <!-- Memory cards will be generated here -->
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-primary" onclick="startNewGame()">🎮 New Game</button>
+            <button class="btn btn-secondary" onclick="resetGame()">🔄 Reset</button>
+            <button class="btn btn-success" onclick="showHighScores()">🏆 High Scores</button>
+        </div>
+
+        <div class="high-scores" id="highScores" style="display: none;">
+            <h3>🏆 High Scores</h3>
+            <div class="score-list" id="scoreList">
+                <!-- High scores will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let gameState = {
+            difficulty: 'easy',
+            cards: [],
+            flippedCards: [],
+            matchedPairs: 0,
+            totalPairs: 0,
+            moves: 0,
+            startTime: null,
+            gameTimer: null,
+            isGameActive: false
+        };
+
+        const pokemonEmojis = [
+            '🐟', '🐠', '🐡', '🦈', '🐋', '🐙', '🦑', '🦐', '🦀', '🐚',
+            '🌱', '🌿', '🍀', '🌺', '🌸', '🌻', '🌷', '🌹', '🌼', '🌵',
+            '⚡', '🔥', '💧', '🌪️', '❄️', '🌟', '⭐', '🌙', '☀️', '🌈',
+            '🦋', '🐝', '🐛', '🕷️', '🦗', '🐞', '🦟', '🦂', '🐜', '🦋'
+        ];
+
+        function initGame() {
+            generateCards();
+            renderCards();
+            updateStats();
+            loadHighScores();
+        }
+
+        function setDifficulty(difficulty) {
+            gameState.difficulty = difficulty;
+            
+            // Update active button
+            document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[onclick="setDifficulty('${difficulty}')"]`).classList.add('active');
+            
+            // Update grid class
+            const grid = document.getElementById('memoryGrid');
+            grid.className = `memory-grid ${difficulty}`;
+            
+            startNewGame();
+        }
+
+        function generateCards() {
+            const difficultySettings = {
+                easy: { pairs: 4, totalCards: 8 },
+                medium: { pairs: 9, totalCards: 18 },
+                hard: { pairs: 16, totalCards: 32 }
+            };
+            
+            const settings = difficultySettings[gameState.difficulty];
+            gameState.totalPairs = settings.pairs;
+            
+            // Select random Pokémon emojis
+            const selectedPokemon = pokemonEmojis.slice(0, settings.pairs);
+            
+            // Create pairs
+            gameState.cards = [];
+            for (let i = 0; i < settings.pairs; i++) {
+                gameState.cards.push({
+                    id: i * 2,
+                    emoji: selectedPokemon[i],
+                    isFlipped: false,
+                    isMatched: false
+                });
+                gameState.cards.push({
+                    id: i * 2 + 1,
+                    emoji: selectedPokemon[i],
+                    isFlipped: false,
+                    isMatched: false
+                });
+            }
+            
+            // Shuffle cards
+            gameState.cards = shuffleArray(gameState.cards);
+        }
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function renderCards() {
+            const grid = document.getElementById('memoryGrid');
+            grid.innerHTML = '';
+            
+            gameState.cards.forEach((card, index) => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'memory-card';
+                cardElement.dataset.cardId = card.id;
+                
+                cardElement.innerHTML = `
+                    <div class="card-back">?</div>
+                    <div class="card-content">${card.emoji}</div>
+                `;
+                
+                cardElement.addEventListener('click', () => flipCard(card.id));
+                
+                grid.appendChild(cardElement);
+            });
+        }
+
+        function flipCard(cardId) {
+            if (!gameState.isGameActive || gameState.flippedCards.length >= 2) return;
+            
+            const card = gameState.cards.find(c => c.id === cardId);
+            if (!card || card.isFlipped || card.isMatched) return;
+            
+            // Start timer on first move
+            if (gameState.moves === 0) {
+                startTimer();
+            }
+            
+            card.isFlipped = true;
+            gameState.flippedCards.push(card);
+            
+            // Update visual
+            const cardElement = document.querySelector(`[data-card-id="${cardId}"]`);
+            cardElement.classList.add('flipped');
+            
+            // Check for match
+            if (gameState.flippedCards.length === 2) {
+                gameState.moves++;
+                updateStats();
+                
+                setTimeout(() => {
+                    checkForMatch();
+                }, 500);
+            }
+        }
+
+        function checkForMatch() {
+            const [card1, card2] = gameState.flippedCards;
+            
+            if (card1.emoji === card2.emoji) {
+                // Match found!
+                card1.isMatched = true;
+                card2.isMatched = true;
+                gameState.matchedPairs++;
+                
+                // Update visuals
+                document.querySelector(`[data-card-id="${card1.id}"]`).classList.add('matched');
+                document.querySelector(`[data-card-id="${card2.id}"]`).classList.add('matched');
+                
+                // Check for game completion
+                if (gameState.matchedPairs === gameState.totalPairs) {
+                    endGame();
+                }
+            } else {
+                // No match, flip cards back
+                card1.isFlipped = false;
+                card2.isFlipped = false;
+                
+                document.querySelector(`[data-card-id="${card1.id}"]`).classList.remove('flipped');
+                document.querySelector(`[data-card-id="${card2.id}"]`).classList.remove('flipped');
+            }
+            
+            gameState.flippedCards = [];
+        }
+
+        function startTimer() {
+            gameState.startTime = Date.now();
+            gameState.isGameActive = true;
+            
+            gameState.gameTimer = setInterval(() => {
+                const elapsed = Date.now() - gameState.startTime;
+                const minutes = Math.floor(elapsed / 60000);
+                const seconds = Math.floor((elapsed % 60000) / 1000);
+                
+                document.getElementById('time').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        function endGame() {
+            gameState.isGameActive = false;
+            clearInterval(gameState.gameTimer);
+            
+            const elapsed = Date.now() - gameState.startTime;
+            const minutes = Math.floor(elapsed / 60000);
+            const seconds = Math.floor((elapsed % 60000) / 1000);
+            const totalSeconds = minutes * 60 + seconds;
+            
+            // Save high score
+            saveHighScore(totalSeconds);
+            
+            // Show game over screen
+            showGameOver(totalSeconds);
+        }
+
+        function showGameOver(timeInSeconds) {
+            const minutes = Math.floor(timeInSeconds / 60);
+            const seconds = timeInSeconds % 60;
+            
+            const gameOverDiv = document.createElement('div');
+            gameOverDiv.className = 'game-over';
+            gameOverDiv.innerHTML = `
+                <h2>🎉 Congratulations!</h2>
+                <p>You completed the game!</p>
+                <p>Time: ${minutes}:${seconds.toString().padStart(2, '0')}</p>
+                <p>Moves: ${gameState.moves}</p>
+                <button onclick="closeGameOver()">Play Again</button>
+                <button onclick="showHighScores()">View High Scores</button>
+            `;
+            
+            document.body.appendChild(gameOverDiv);
+        }
+
+        function closeGameOver() {
+            document.querySelector('.game-over').remove();
+        }
+
+        function startNewGame() {
+            gameState.matchedPairs = 0;
+            gameState.moves = 0;
+            gameState.flippedCards = [];
+            gameState.isGameActive = false;
+            
+            if (gameState.gameTimer) {
+                clearInterval(gameState.gameTimer);
+            }
+            
+            document.getElementById('time').textContent = '00:00';
+            updateStats();
+            
+            generateCards();
+            renderCards();
+        }
+
+        function resetGame() {
+            startNewGame();
+            showNotification('Game reset! 🎮', 'info');
+        }
+
+        function updateStats() {
+            document.getElementById('moves').textContent = gameState.moves;
+            document.getElementById('matches').textContent = gameState.matchedPairs;
+        }
+
+        function saveHighScore(timeInSeconds) {
+            const highScores = JSON.parse(localStorage.getItem('pokemon-memory-scores')) || {
+                easy: [],
+                medium: [],
+                hard: []
+            };
+            
+            const score = {
+                time: timeInSeconds,
+                moves: gameState.moves,
+                date: new Date().toLocaleDateString()
+            };
+            
+            highScores[gameState.difficulty].push(score);
+            highScores[gameState.difficulty].sort((a, b) => a.time - b.time);
+            highScores[gameState.difficulty] = highScores[gameState.difficulty].slice(0, 5);
+            
+            localStorage.setItem('pokemon-memory-scores', JSON.stringify(highScores));
+        }
+
+        function loadHighScores() {
+            const highScores = JSON.parse(localStorage.getItem('pokemon-memory-scores')) || {
+                easy: [],
+                medium: [],
+                hard: []
+            };
+            
+            const scoreList = document.getElementById('scoreList');
+            scoreList.innerHTML = '';
+            
+            Object.keys(highScores).forEach(difficulty => {
+                if (highScores[difficulty].length > 0) {
+                    const scoreItem = document.createElement('div');
+                    scoreItem.className = 'score-item';
+                    
+                    const bestScore = highScores[difficulty][0];
+                    const minutes = Math.floor(bestScore.time / 60);
+                    const seconds = bestScore.time % 60;
+                    
+                    scoreItem.innerHTML = `
+                        <div class="score-difficulty">${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}</div>
+                        <div class="score-time">${minutes}:${seconds.toString().padStart(2, '0')}</div>
+                        <div style="font-size: 0.9rem; color: #718096;">${bestScore.moves} moves</div>
+                    `;
+                    
+                    scoreList.appendChild(scoreItem);
+                }
+            });
+        }
+
+        function showHighScores() {
+            const highScoresDiv = document.getElementById('highScores');
+            highScoresDiv.style.display = highScoresDiv.style.display === 'none' ? 'block' : 'none';
+            
+            if (highScoresDiv.style.display === 'block') {
+                loadHighScores();
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#48bb78' : type === 'error' ? '#f56565' : '#4299e1'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 10000;
+                font-weight: 500;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        // Initialize the game
+        document.addEventListener('DOMContentLoaded', function() {
+            initGame();
+        });
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

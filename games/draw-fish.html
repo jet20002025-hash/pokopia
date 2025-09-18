@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draw a Fish - Pokopia Games</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .game-title {
+            font-size: 2.5rem;
+            color: #4a5568;
+            margin-bottom: 10px;
+        }
+
+        .game-subtitle {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+
+        .canvas-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        #fishCanvas {
+            border: 3px solid #e2e8f0;
+            border-radius: 15px;
+            cursor: crosshair;
+            background: linear-gradient(180deg, #87CEEB 0%, #4682B4 100%);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f7fafc;
+            padding: 10px 15px;
+            border-radius: 25px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .color-picker {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid #e2e8f0;
+        }
+
+        .brush-size {
+            width: 80px;
+            height: 30px;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        .btn-danger {
+            background: #f56565;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #e53e3e;
+        }
+
+        .fish-templates {
+            margin-bottom: 30px;
+        }
+
+        .templates-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4a5568;
+            font-size: 1.3rem;
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+        }
+
+        .template-btn {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .template-btn:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .template-btn.active {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .template-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .template-name {
+            font-size: 0.9rem;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .gallery {
+            margin-top: 30px;
+        }
+
+        .gallery-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4a5568;
+            font-size: 1.3rem;
+        }
+
+        .fish-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-item {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .gallery-fish {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .gallery-name {
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 5px;
+        }
+
+        .gallery-date {
+            font-size: 0.8rem;
+            color: #a0aec0;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #4a5568;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .game-title {
+                font-size: 2rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .control-group {
+                width: 100%;
+                justify-content: center;
+            }
+
+            #fishCanvas {
+                width: 100%;
+                max-width: 400px;
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="goBack()">←</button>
+    
+    <div class="game-container">
+        <div class="game-header">
+            <h1 class="game-title">🐠 Draw a Fish</h1>
+            <p class="game-subtitle">Create and share your fish drawings with the global community!</p>
+        </div>
+
+        <div class="fish-templates">
+            <h3 class="templates-title">Choose a Fish Template</h3>
+            <div class="template-grid">
+                <div class="template-btn active" data-template="basic" onclick="selectTemplate('basic')">
+                    <div class="template-icon">🐟</div>
+                    <div class="template-name">Basic Fish</div>
+                </div>
+                <div class="template-btn" data-template="clownfish" onclick="selectTemplate('clownfish')">
+                    <div class="template-icon">🐠</div>
+                    <div class="template-name">Clownfish</div>
+                </div>
+                <div class="template-btn" data-template="angelfish" onclick="selectTemplate('angelfish')">
+                    <div class="template-icon">🐡</div>
+                    <div class="template-name">Angelfish</div>
+                </div>
+                <div class="template-btn" data-template="shark" onclick="selectTemplate('shark')">
+                    <div class="template-icon">🦈</div>
+                    <div class="template-name">Shark</div>
+                </div>
+                <div class="template-btn" data-template="whale" onclick="selectTemplate('whale')">
+                    <div class="template-icon">🐋</div>
+                    <div class="template-name">Whale</div>
+                </div>
+                <div class="template-btn" data-template="octopus" onclick="selectTemplate('octopus')">
+                    <div class="template-icon">🐙</div>
+                    <div class="template-name">Octopus</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="canvas-container">
+            <canvas id="fishCanvas" width="600" height="400"></canvas>
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <label>Color:</label>
+                <input type="color" class="color-picker" id="colorPicker" value="#ff6b6b">
+            </div>
+            <div class="control-group">
+                <label>Brush Size:</label>
+                <input type="range" class="brush-size" id="brushSize" min="2" max="20" value="5">
+            </div>
+            <div class="control-group">
+                <button class="btn btn-secondary" onclick="clearCanvas()">Clear</button>
+                <button class="btn btn-primary" onclick="saveFish()">Save Fish</button>
+                <button class="btn btn-danger" onclick="resetCanvas()">Reset</button>
+            </div>
+        </div>
+
+        <div class="gallery">
+            <h3 class="gallery-title">Community Fish Gallery</h3>
+            <div class="fish-gallery" id="fishGallery">
+                <!-- Fish gallery items will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let canvas, ctx;
+        let isDrawing = false;
+        let currentTemplate = 'basic';
+        let savedFishes = JSON.parse(localStorage.getItem('pokopia-fishes')) || [];
+
+        // Initialize canvas
+        function initCanvas() {
+            canvas = document.getElementById('fishCanvas');
+            ctx = canvas.getContext('2d');
+            
+            // Set initial drawing properties
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.strokeStyle = '#ff6b6b';
+            ctx.lineWidth = 5;
+
+            // Draw initial template
+            drawTemplate(currentTemplate);
+
+            // Event listeners
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+
+            // Touch events for mobile
+            canvas.addEventListener('touchstart', handleTouch);
+            canvas.addEventListener('touchmove', handleTouch);
+            canvas.addEventListener('touchend', stopDrawing);
+
+            // Color picker
+            document.getElementById('colorPicker').addEventListener('change', function(e) {
+                ctx.strokeStyle = e.target.value;
+            });
+
+            // Brush size
+            document.getElementById('brushSize').addEventListener('input', function(e) {
+                ctx.lineWidth = e.target.value;
+            });
+        }
+
+        function handleTouch(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 
+                                            e.type === 'touchmove' ? 'mousemove' : 'mouseup', {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            canvas.dispatchEvent(mouseEvent);
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            ctx.beginPath();
+            ctx.moveTo(e.offsetX, e.offsetY);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        function selectTemplate(template) {
+            currentTemplate = template;
+            
+            // Update active template
+            document.querySelectorAll('.template-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-template="${template}"]`).classList.add('active');
+            
+            // Redraw template
+            drawTemplate(template);
+        }
+
+        function drawTemplate(template) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw ocean background
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, '#87CEEB');
+            gradient.addColorStop(1, '#4682B4');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw template fish
+            ctx.save();
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            
+            switch(template) {
+                case 'basic':
+                    drawBasicFish();
+                    break;
+                case 'clownfish':
+                    drawClownfish();
+                    break;
+                case 'angelfish':
+                    drawAngelfish();
+                    break;
+                case 'shark':
+                    drawShark();
+                    break;
+                case 'whale':
+                    drawWhale();
+                    break;
+                case 'octopus':
+                    drawOctopus();
+                    break;
+            }
+            
+            ctx.restore();
+        }
+
+        function drawBasicFish() {
+            ctx.fillStyle = '#ff6b6b';
+            ctx.beginPath();
+            ctx.ellipse(0, 0, 60, 30, 0, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Tail
+            ctx.beginPath();
+            ctx.moveTo(-60, 0);
+            ctx.lineTo(-80, -20);
+            ctx.lineTo(-80, 20);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Eye
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(20, -10, 8, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.fillStyle = 'black';
+            ctx.beginPath();
+            ctx.arc(22, -10, 4, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+
+        function drawClownfish() {
+            ctx.fillStyle = '#ff8c00';
+            ctx.beginPath();
+            ctx.ellipse(0, 0, 50, 25, 0, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // White stripes
+            ctx.fillStyle = 'white';
+            ctx.fillRect(-30, -25, 8, 50);
+            ctx.fillRect(-10, -25, 8, 50);
+            ctx.fillRect(10, -25, 8, 50);
+            
+            // Tail
+            ctx.fillStyle = '#ff8c00';
+            ctx.beginPath();
+            ctx.moveTo(-50, 0);
+            ctx.lineTo(-70, -15);
+            ctx.lineTo(-70, 15);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Eye
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(15, -8, 6, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.fillStyle = 'black';
+            ctx.beginPath();
+            ctx.arc(17, -8, 3, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+
+        function drawAngelfish() {
+            ctx.fillStyle = '#4169e1';
+            ctx.beginPath();
+            ctx.ellipse(0, 0, 45, 35, 0, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Vertical stripes
+            ctx.fillStyle = '#ffd700';
+            for(let i = -40; i < 40; i += 8) {
+                ctx.fillRect(i, -35, 3, 70);
+            }
+            
+            // Tail
+            ctx.fillStyle = '#4169e1';
+            ctx.beginPath();
+            ctx.moveTo(-45, 0);
+            ctx.lineTo(-65, -25);
+            ctx.lineTo(-65, 25);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Eye
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(10, -12, 7, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.fillStyle = 'black';
+            ctx.beginPath();
+            ctx.arc(12, -12, 4, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+
+        function drawShark() {
+            ctx.fillStyle = '#708090';
+            ctx.beginPath();
+            ctx.ellipse(0, 0, 80, 25, 0, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Tail
+            ctx.beginPath();
+            ctx.moveTo(-80, 0);
+            ctx.lineTo(-100, -20);
+            ctx.lineTo(-100, 20);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Fin
+            ctx.beginPath();
+            ctx.moveTo(0, -25);
+            ctx.lineTo(20, -40);
+            ctx.lineTo(40, -25);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Eye
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(25, -8, 6, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.fillStyle = 'black';
+            ctx.beginPath();
+            ctx.arc(27, -8, 3, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+
+        function drawWhale() {
+            ctx.fillStyle = '#4682b4';
+            ctx.beginPath();
+            ctx.ellipse(0, 0, 100, 40, 0, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Tail
+            ctx.beginPath();
+            ctx.moveTo(-100, 0);
+            ctx.lineTo(-130, -30);
+            ctx.lineTo(-130, 30);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Eye
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(30, -15, 8, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.fillStyle = 'black';
+            ctx.beginPath();
+            ctx.arc(32, -15, 4, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+
+        function drawOctopus() {
+            ctx.fillStyle = '#8b4513';
+            ctx.beginPath();
+            ctx.arc(0, 0, 40, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Tentacles
+            for(let i = 0; i < 8; i++) {
+                const angle = (i * Math.PI * 2) / 8;
+                const x = Math.cos(angle) * 40;
+                const y = Math.sin(angle) * 40;
+                
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(x + Math.cos(angle) * 30, y + Math.sin(angle) * 30);
+                ctx.lineWidth = 8;
+                ctx.stroke();
+                ctx.lineWidth = 5; // Reset line width
+            }
+            
+            // Eye
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(-10, -10, 6, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.fillStyle = 'black';
+            ctx.beginPath();
+            ctx.arc(-8, -10, 3, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawTemplate(currentTemplate);
+        }
+
+        function resetCanvas() {
+            clearCanvas();
+            ctx.strokeStyle = '#ff6b6b';
+            ctx.lineWidth = 5;
+            document.getElementById('colorPicker').value = '#ff6b6b';
+            document.getElementById('brushSize').value = 5;
+        }
+
+        function saveFish() {
+            const fishData = {
+                id: Date.now(),
+                template: currentTemplate,
+                imageData: canvas.toDataURL(),
+                date: new Date().toLocaleDateString(),
+                name: `My ${currentTemplate} Fish`
+            };
+            
+            savedFishes.unshift(fishData);
+            if (savedFishes.length > 20) {
+                savedFishes = savedFishes.slice(0, 20);
+            }
+            
+            localStorage.setItem('pokopia-fishes', JSON.stringify(savedFishes));
+            updateGallery();
+            
+            // Show success message
+            showNotification('Fish saved successfully! 🐠', 'success');
+        }
+
+        function updateGallery() {
+            const gallery = document.getElementById('fishGallery');
+            gallery.innerHTML = '';
+            
+            savedFishes.forEach(fish => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.innerHTML = `
+                    <div class="gallery-fish">${getFishEmoji(fish.template)}</div>
+                    <div class="gallery-name">${fish.name}</div>
+                    <div class="gallery-date">${fish.date}</div>
+                `;
+                
+                item.addEventListener('click', () => {
+                    const img = new Image();
+                    img.onload = () => {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    };
+                    img.src = fish.imageData;
+                });
+                
+                gallery.appendChild(item);
+            });
+        }
+
+        function getFishEmoji(template) {
+            const emojis = {
+                'basic': '🐟',
+                'clownfish': '🐠',
+                'angelfish': '🐡',
+                'shark': '🦈',
+                'whale': '🐋',
+                'octopus': '🐙'
+            };
+            return emojis[template] || '🐟';
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#48bb78' : '#4299e1'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 10000;
+                font-weight: 500;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        // Initialize the game
+        document.addEventListener('DOMContentLoaded', function() {
+            initCanvas();
+            updateGallery();
+        });
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
