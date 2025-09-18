@@ -8,32 +8,6 @@
         <priority>1.0</priority>
     </url>
     
-    <!-- Games Pages -->
-    <url>
-        <loc>https://pokopia.info/games/index.html</loc>
-        <lastmod>2025-01-14</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://pokopia.info/games/draw-fish.html</loc>
-        <lastmod>2025-01-14</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    <url>
-        <loc>https://pokopia.info/games/mini-adventure.html</loc>
-        <lastmod>2025-01-14</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    <url>
-        <loc>https://pokopia.info/games/memory-game.html</loc>
-        <lastmod>2025-01-14</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    
     <!-- Legal Pages -->
     <url>
         <loc>https://pokopia.info/privacy-policy.html</loc>
