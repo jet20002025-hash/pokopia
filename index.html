@@ -2063,11 +2063,22 @@
             }, 3000);
         }
 
-        // Load saved language preference
+        // Load saved language preference and initialize games
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing games...');
+            
             const savedLang = localStorage.getItem('pokopia-language') || 'en';
-            document.getElementById('languageSelect').value = savedLang;
-            changeLanguage(savedLang);
+            const langSelect = document.getElementById('languageSelect');
+            if (langSelect) {
+                langSelect.value = savedLang;
+                changeLanguage(savedLang);
+            }
+            
+            // Initialize the first game (Draw a Fish) by default
+            setTimeout(() => {
+                console.log('Initializing Draw Fish game...');
+                initDrawFishGame();
+            }, 500);
         });
 
         // Pokédex search functionality
@@ -2146,15 +2157,18 @@
             document.getElementById(gameType + '-game').classList.add('active');
             
             // Add active to clicked button
-            event.target.classList.add('active');
+            const clickedBtn = document.querySelector(`[onclick="showGame('${gameType}')"]`);
+            if (clickedBtn) {
+                clickedBtn.classList.add('active');
+            }
             
             // Initialize the game if needed
             if (gameType === 'draw-fish') {
-                initDrawFishGame();
+                setTimeout(() => initDrawFishGame(), 100);
             } else if (gameType === 'mini-adventure') {
-                initMiniAdventureGame();
+                setTimeout(() => initMiniAdventureGame(), 100);
             } else if (gameType === 'memory-game') {
-                initMemoryGame();
+                setTimeout(() => initMemoryGame(), 100);
             }
         }
 
@@ -2165,7 +2179,16 @@
 
         function initDrawFishGame() {
             canvas = document.getElementById('fishCanvas');
+            if (!canvas) {
+                console.error('Canvas not found');
+                return;
+            }
+            
             ctx = canvas.getContext('2d');
+            if (!ctx) {
+                console.error('Canvas context not available');
+                return;
+            }
             
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
@@ -2174,17 +2197,39 @@
 
             drawTemplate(currentTemplate);
 
+            // Remove existing event listeners to avoid duplicates
+            canvas.removeEventListener('mousedown', startDrawing);
+            canvas.removeEventListener('mousemove', draw);
+            canvas.removeEventListener('mouseup', stopDrawing);
+
             canvas.addEventListener('mousedown', startDrawing);
             canvas.addEventListener('mousemove', draw);
             canvas.addEventListener('mouseup', stopDrawing);
 
-            document.getElementById('colorPicker').addEventListener('change', function(e) {
-                ctx.strokeStyle = e.target.value;
-            });
+            const colorPicker = document.getElementById('colorPicker');
+            const brushSize = document.getElementById('brushSize');
+            
+            if (colorPicker) {
+                colorPicker.removeEventListener('change', handleColorChange);
+                colorPicker.addEventListener('change', handleColorChange);
+            }
+            
+            if (brushSize) {
+                brushSize.removeEventListener('input', handleBrushChange);
+                brushSize.addEventListener('input', handleBrushChange);
+            }
+        }
 
-            document.getElementById('brushSize').addEventListener('input', function(e) {
+        function handleColorChange(e) {
+            if (ctx) {
+                ctx.strokeStyle = e.target.value;
+            }
+        }
+
+        function handleBrushChange(e) {
+            if (ctx) {
                 ctx.lineWidth = e.target.value;
-            });
+            }
         }
 
         function startDrawing(e) {
@@ -2388,12 +2433,22 @@
             const gameArea = document.getElementById('gameArea');
             const ditto = document.getElementById('ditto');
             
+            if (!gameArea || !ditto) {
+                console.error('Game area or ditto not found');
+                return;
+            }
+            
             ditto.style.left = gameState.dittoPosition.x + 'px';
             ditto.style.top = gameState.dittoPosition.y + 'px';
             
             generateMaterials();
             generatePokemon();
-            gameLoop();
+            
+            // Start game loop if not already running
+            if (!gameRunning) {
+                gameRunning = true;
+                gameLoop();
+            }
         }
 
         function generateMaterials() {
@@ -2606,6 +2661,12 @@
         ];
 
         function initMemoryGame() {
+            const memoryGrid = document.getElementById('memoryGrid');
+            if (!memoryGrid) {
+                console.error('Memory grid not found');
+                return;
+            }
+            
             generateMemoryCards();
             renderMemoryCards();
             updateMemoryStats();
