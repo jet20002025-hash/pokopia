@@ -1356,7 +1356,7 @@
                         <li><a href="#community" data-en="Community" data-zh="社区" data-ja="コミュニティ">Community</a></li>
                         <li><a href="#guides" data-en="Guides" data-zh="攻略指南" data-ja="攻略ガイド">Guides</a></li>
                         <li><a href="#media" data-en="Media" data-zh="多媒体" data-ja="メディア">Media</a></li>
-                        <li><a href="games/index.html" data-en="Games" data-zh="游戏" data-ja="ゲーム">Games</a></li>
+                        <li><a href="#games" data-en="Games" data-zh="游戏" data-ja="ゲーム">Games</a></li>
                         <li><a href="#purchase" data-en="Pre-order" data-zh="预购" data-ja="予約">Pre-order</a></li>
                     </ul>
                 </nav>
@@ -2063,22 +2063,11 @@
             }, 3000);
         }
 
-        // Load saved language preference and initialize games
+        // Load saved language preference
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, initializing games...');
-            
             const savedLang = localStorage.getItem('pokopia-language') || 'en';
-            const langSelect = document.getElementById('languageSelect');
-            if (langSelect) {
-                langSelect.value = savedLang;
-                changeLanguage(savedLang);
-            }
-            
-            // Initialize the first game (Draw a Fish) by default
-            setTimeout(() => {
-                console.log('Initializing Draw Fish game...');
-                initDrawFishGame();
-            }, 500);
+            document.getElementById('languageSelect').value = savedLang;
+            changeLanguage(savedLang);
         });
 
         // Pokédex search functionality
@@ -2157,18 +2146,15 @@
             document.getElementById(gameType + '-game').classList.add('active');
             
             // Add active to clicked button
-            const clickedBtn = document.querySelector(`[onclick="showGame('${gameType}')"]`);
-            if (clickedBtn) {
-                clickedBtn.classList.add('active');
-            }
+            event.target.classList.add('active');
             
             // Initialize the game if needed
             if (gameType === 'draw-fish') {
-                setTimeout(() => initDrawFishGame(), 100);
+                initDrawFishGame();
             } else if (gameType === 'mini-adventure') {
-                setTimeout(() => initMiniAdventureGame(), 100);
+                initMiniAdventureGame();
             } else if (gameType === 'memory-game') {
-                setTimeout(() => initMemoryGame(), 100);
+                initMemoryGame();
             }
         }
 
@@ -2179,16 +2165,7 @@
 
         function initDrawFishGame() {
             canvas = document.getElementById('fishCanvas');
-            if (!canvas) {
-                console.error('Canvas not found');
-                return;
-            }
-            
             ctx = canvas.getContext('2d');
-            if (!ctx) {
-                console.error('Canvas context not available');
-                return;
-            }
             
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
@@ -2197,39 +2174,17 @@
 
             drawTemplate(currentTemplate);
 
-            // Remove existing event listeners to avoid duplicates
-            canvas.removeEventListener('mousedown', startDrawing);
-            canvas.removeEventListener('mousemove', draw);
-            canvas.removeEventListener('mouseup', stopDrawing);
-
             canvas.addEventListener('mousedown', startDrawing);
             canvas.addEventListener('mousemove', draw);
             canvas.addEventListener('mouseup', stopDrawing);
 
-            const colorPicker = document.getElementById('colorPicker');
-            const brushSize = document.getElementById('brushSize');
-            
-            if (colorPicker) {
-                colorPicker.removeEventListener('change', handleColorChange);
-                colorPicker.addEventListener('change', handleColorChange);
-            }
-            
-            if (brushSize) {
-                brushSize.removeEventListener('input', handleBrushChange);
-                brushSize.addEventListener('input', handleBrushChange);
-            }
-        }
-
-        function handleColorChange(e) {
-            if (ctx) {
+            document.getElementById('colorPicker').addEventListener('change', function(e) {
                 ctx.strokeStyle = e.target.value;
-            }
-        }
+            });
 
-        function handleBrushChange(e) {
-            if (ctx) {
+            document.getElementById('brushSize').addEventListener('input', function(e) {
                 ctx.lineWidth = e.target.value;
-            }
+            });
         }
 
         function startDrawing(e) {
@@ -2433,22 +2388,12 @@
             const gameArea = document.getElementById('gameArea');
             const ditto = document.getElementById('ditto');
             
-            if (!gameArea || !ditto) {
-                console.error('Game area or ditto not found');
-                return;
-            }
-            
             ditto.style.left = gameState.dittoPosition.x + 'px';
             ditto.style.top = gameState.dittoPosition.y + 'px';
             
             generateMaterials();
             generatePokemon();
-            
-            // Start game loop if not already running
-            if (!gameRunning) {
-                gameRunning = true;
-                gameLoop();
-            }
+            gameLoop();
         }
 
         function generateMaterials() {
@@ -2661,12 +2606,6 @@
         ];
 
         function initMemoryGame() {
-            const memoryGrid = document.getElementById('memoryGrid');
-            if (!memoryGrid) {
-                console.error('Memory grid not found');
-                return;
-            }
-            
             generateMemoryCards();
             renderMemoryCards();
             updateMemoryStats();
