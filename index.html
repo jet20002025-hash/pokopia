@@ -29,7 +29,7 @@
     
     <!-- Security and Safety Meta Tags -->
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: https://*.googlesyndication.com https://*.google.com; frame-src 'self' https://googleads.g.doubleclick.net; connect-src 'self' https://pagead2.googlesyndication.com https://www.google-analytics.com;">
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7208260866318884"
@@ -2761,7 +2761,13 @@
             keys[e.key] = false;
         });
 
-        // Initialize AdSense
+        // Initialize AdSense with proper configuration
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-7208260866318884",
+            enable_page_level_ads: true
+        });
+        
+        // Initialize AdSense ad units
         (adsbygoogle = window.adsbygoogle || []).push({});
         (adsbygoogle = window.adsbygoogle || []).push({});
         (adsbygoogle = window.adsbygoogle || []).push({});
