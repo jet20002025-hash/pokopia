@@ -14,3 +14,4 @@ You can add your own images or use placeholder services like:
 - https://via.placeholder.com/200x60/667eea/ffffff?text=Pokopia
 
 
+
